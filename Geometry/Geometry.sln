@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry", "Geometry\Geometry.csproj", "{F2647CA2-E15C-448F-82C4-EB6CB5B59B23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeometryLibrary", "GeometryLibrary\ClassLibrary1\GeometryLibrary.csproj", "{4D884BA4-E343-4DC2-BB0B-5FC9072D56A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{F8ABCD0C-64D5-42F6-8D0B-46EBDA8AFE2D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2647CA2-E15C-448F-82C4-EB6CB5B59B23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2647CA2-E15C-448F-82C4-EB6CB5B59B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2647CA2-E15C-448F-82C4-EB6CB5B59B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2647CA2-E15C-448F-82C4-EB6CB5B59B23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D884BA4-E343-4DC2-BB0B-5FC9072D56A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D884BA4-E343-4DC2-BB0B-5FC9072D56A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D884BA4-E343-4DC2-BB0B-5FC9072D56A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D884BA4-E343-4DC2-BB0B-5FC9072D56A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8ABCD0C-64D5-42F6-8D0B-46EBDA8AFE2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8ABCD0C-64D5-42F6-8D0B-46EBDA8AFE2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8ABCD0C-64D5-42F6-8D0B-46EBDA8AFE2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8ABCD0C-64D5-42F6-8D0B-46EBDA8AFE2D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

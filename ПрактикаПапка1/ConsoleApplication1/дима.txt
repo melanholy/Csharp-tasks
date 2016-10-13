@@ -1,0 +1,36 @@
+public static double Minus(Tuple<string, string> first, Tuple<string, string> second)
+        {
+            var one = first.Item2.Split(':', '.', '-', ';');
+            var two = second.Item2.Split(':', '.', '-', ';');
+            DateTime dtEnd = new DateTime(int.Parse(one[0]), int.Parse(one[1]), int.Parse(one[2]), int.Parse(one[3]), int.Parse(one[4]), int.Parse(one[5]), int.Parse(one[6]));
+            DateTime dtStart = new DateTime(int.Parse(two[0]), int.Parse(two[1]), int.Parse(two[2]), int.Parse(two[3]), int.Parse(two[4]), int.Parse(two[5]), int.Parse(two[6]));
+            var g = (dtEnd - dtStart).TotalMinutes;
+            return g;
+        }
+        public static ILookup<string,Tuple<string,string>> GroupForUser(string[] lines)
+        {
+            return lines
+                .ToLookup(x => x.Split(';')[0], x => 
+                    {
+                        var tmp = x.Split(';');
+                        return Tuple.Create(tmp[1], tmp[2]+";"+tmp[3]);
+                    });
+        }
+        public static Dictionary<string,string> Slides(string[] lines)
+        {
+            return lines
+                .ToDictionary(x => x.Split(';')[0], x => x.Split(';')[1]);
+        }
+        public static IEnumerable<double> TimeForGroup(ILookup<string, Tuple<string, string>> users, string name)
+        {
+            string[] lines = File.ReadAllLines("slides.txt");
+            var slides = Slides(lines);
+            foreach (var group in users)
+            {
+                foreach (var t in group
+                .GetBigrams()
+                .Where(x => slides[x.Item1.Item1] == name)
+                .Select(x => Minus(x.Item2, x.Item1)))
+                    yield return t;
+            }
+        }

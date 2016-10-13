@@ -1,0 +1,21 @@
+public static void MakeNotSoTrivialPermutation(Point[] checkpoints, List<int[]> result, int[] permutation, int position = 0)
+        {
+            if (position == permutation.Length)
+            {
+                var perm = permutation.ToArray();
+                result.Add(perm);
+                return;
+            }
+            else
+            {
+                for (int i = 0; i < permutation.Length; i++)
+                {
+                    var index = Array.IndexOf(permutation, i, 0, position);
+                    if (index == -1)
+                    {
+                        permutation[position] = i;
+                        MakeNotSoTrivialPermutation(checkpoints, result, permutation, position + 1);
+                    }
+                }
+            }
+        }

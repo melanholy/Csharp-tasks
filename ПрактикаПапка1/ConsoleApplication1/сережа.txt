@@ -1,0 +1,267 @@
+
+    
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+
+namespace Практика
+{
+    public static class Program
+    {
+        public static void ReadSlides(ref Dictionary<string, string> dict, ref string idSlides, ref string typeSlides)
+        {
+            var slides = File.ReadAllLines("slides.txt").Skip(1);
+            foreach (var e in slides)
+            {
+                idSlides = e.Split(';')[0];
+                typeSlides = e.Split(';')[1];
+                dict[idSlides] = typeSlides;
+            }
+        }
+        public static void ReadVisits(ref Dictionary<string, string> dicti, ref string UserId, ref string SlideId,
+            ref string Date, ref string Time, ref Dictionary<string, string> dict)
+        {
+            var visits = File.ReadAllLines("visits.txt").Skip(1);
+            foreach (var e in visits)
+            {
+                UserId = e.Split(';')[0];
+                SlideId = e.Split(';')[1];
+                Date = e.Split(';')[2];
+                Time = e.Split(';')[3];
+                if (!dicti.ContainsKey(UserId))
+                    dicti[UserId] = Tuple.Create(SlideId, dict[SlideId], Date, Time).ToString();
+                else
+                    dicti[UserId] += ";" + Tuple.Create(SlideId, dict[SlideId], Date, Time);
+            }
+        }
+        static void Work(Dictionary<string, string> dicti, ref List<double> theory, ref List<double> exercise, ref List<double> quiz)
+        {
+            foreach (var e in dicti)
+            {
+                var a = e.Value.Split(';');
+                for (var i = 0; i < a.Length - 1; i++)
+                {
+                    var date = DateTime.Parse(a[i].Split(',')[2].Replace(" ", "") +
+                        a[i].Split(',')[3].Replace(")", ""));
+                    var date2 = DateTime.Parse(a[i + 1].Split(',')[2].Replace(" ", "") +
+                       a[i + 1].Split(',')[3].Replace(")", ""));
+                    var d = (date2 - date).TotalMinutes;
+                    if (d <= 120 && d >= 1)
+                    {
+                        if (a[i].Split(',')[1] == " theory")
+                            theory.Add(d);
+                        if (a[i].Split(',')[1] == " exercise")
+                            exercise.Add(d);
+                        if (a[i].Split(',')[1] == " quiz")
+                            quiz.Add(d);
+                    }
+                }
+
+            }
+        }
+        public static Series BuildGraph(Func<int, double> f, List<double> a)
+        {
+            var series = new Series() { ChartType = SeriesChartType.FastLine };
+            for (var x = 0; x < 100 ; x ++)
+                series.Points.Add(new DataPoint(x, f(x)));
+            return series;
+        }
+        static void Main()
+        {
+            #region
+            var dict = new Dictionary<string, string>();
+            var typeSlides = "";
+            var idSlides = "";
+            ReadSlides(ref dict, ref idSlides, ref typeSlides);
+            var UserId = "";
+            var SlideId = "";
+            var Date = "";
+            var Time = "";
+            var dicti = new Dictionary<string, string>();
+            ReadVisits(ref dicti, ref UserId, ref SlideId, ref Date, ref Time, ref dict);
+            var theory = new List<double>();
+            var exercise = new List<double>();
+            var quiz = new List<double>();
+            Work(dicti, ref theory, ref exercise, ref quiz);
+            Print(theory, exercise, quiz);
+            #endregion
+            Func<int, double> function1 = x => theory[x];
+            Func<int, double> function2 = x => exercise[x];
+            Func<int, double> function3 = x => quiz[x];
+            var chart = new Chart();
+            chart.ChartAreas.Add(new ChartArea());
+            chart.Series.Add(BuildGraph(function1, theory));
+            chart.Series.Add(BuildGraph(function2, exercise));
+            chart.Series.Add(BuildGraph(function3, quiz));
+            var form = new Form
+            {
+                WindowState = FormWindowState.Maximized,
+                Text = "Синий - теория, жёлтый - задачи, красный - тесты "
+            };
+            chart.Dock = DockStyle.Fill;
+            form.Controls.Add(chart);
+            Application.Run(form);
+            Console.ReadKey();
+        }
+        static void Print(List<double> theory, List<double> exercise, List<double> quiz)
+        {
+            Console.WriteLine("{0} minutes per theory slide", Median(theory));
+            Console.WriteLine("{0} minutes per exercise slide", Median(exercise));
+            Console.WriteLine("{0} minutes per quiz slide", Median(quiz));
+        }
+        public static double Median(this IEnumerable<double> items)
+        {
+            return items.OrderBy(x => x).Average();
+        }
+        public static IEnumerable<Tuple<T, T>> GetBigrams<T>(this IEnumerable<T> items)
+        {
+            if (items.Count() == 1) throw new Exception("need items.Count() > 1");
+            var a = new Tuple<T, T>[items.Count() - 1];
+            for (var i = 0; i < a.Count(); i++)
+                a[i] = Tuple.Create(items.ToArray()[i], items.ToArray()[i + 1]);
+            return a.Distinct();
+        }
+        
+
+    }
+}
