@@ -8,43 +8,43 @@ namespace func_rocket
 	{
 		public static IEnumerable<GameSpace> GetGameSpaces()
 		{
-            yield return new GameSpace("zero-gravity", new Rocket(new Vector(50, 700), Vector.Zero, -1.2 * Math.PI), new Vector(800, 100), балбес => Vector.Zero, x => 110000 / x);
-            yield return new GameSpace("heavy-gravity", new Rocket(new Vector(50, 700), Vector.Zero, 1.2 * Math.PI), new Vector(800, 100), балбес => new Vector(0, 0.9), x => 1 / x);
-            var дыра = new Vector(800, 100);
-            yield return new GameSpace("white-hole", new Rocket(new Vector(800, 700), Vector.Zero, 1.2 * Math.PI), дыра, балбес =>
+            yield return new GameSpace("zero-gravity", new Rocket(new Vector(50, 700), Vector.Zero, -1.2 * Math.PI), new Vector(800, 100), ГЎГ Г«ГЎГҐГ± => Vector.Zero, x => 110000 / x);
+            yield return new GameSpace("heavy-gravity", new Rocket(new Vector(50, 700), Vector.Zero, 1.2 * Math.PI), new Vector(800, 100), ГЎГ Г«ГЎГҐГ± => new Vector(0, 0.9), x => 1 / x);
+            var Г¤Г»Г°Г  = new Vector(800, 100);
+            yield return new GameSpace("white-hole", new Rocket(new Vector(800, 700), Vector.Zero, 1.2 * Math.PI), Г¤Г»Г°Г , ГЎГ Г«ГЎГҐГ± =>
             {
-                var направление = (балбес - дыра);
-                var модуль = (50 * направление.Length) / ((направление.Length + 1) * (направление.Length + 1));
-                var чтото = модуль / направление.Length;
-                var результат = new Vector(направление.X * чтото, направление.Y * чтото);
-                return результат;
+                var Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ = (ГЎГ Г«ГЎГҐГ± - Г¤Г»Г°Г );
+                var Г¬Г®Г¤ГіГ«Гј = (50 * Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Length) / ((Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Length + 1) * (Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Length + 1));
+                var Г·ГІГ®ГІГ® = Г¬Г®Г¤ГіГ«Гј / Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Length;
+                var Г°ГҐГ§ГіГ«ГјГІГ ГІ = new Vector(Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.X * Г·ГІГ®ГІГ®, Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Y * Г·ГІГ®ГІГ®);
+                return Г°ГҐГ§ГіГ«ГјГІГ ГІ;
             }, x => 1/x);
-            yield return new GameSpace("anomaly", new Rocket(new Vector(50, 700), Vector.Zero, 1.2 * Math.PI), new Vector(800, 100), балбес => 
+            yield return new GameSpace("anomaly", new Rocket(new Vector(50, 700), Vector.Zero, 1.2 * Math.PI), new Vector(800, 100), ГЎГ Г«ГЎГҐГ± => 
             {
-                var угол = Math.PI * DateTime.Now.Millisecond / 500.0;
-                return new Vector(Math.Cos(угол), Math.Sin(угол));
+                var ГіГЈГ®Г« = Math.PI * DateTime.Now.Millisecond / 500.0;
+                return new Vector(Math.Cos(ГіГЈГ®Г«), Math.Sin(ГіГЈГ®Г«));
             }, x => 1 / x);
             var rand = new Random();
-            yield return new GameSpace("pulse", new Rocket(new Vector(800, 700), Vector.Zero, 1.2 * Math.PI), дыра, балбес =>
+            yield return new GameSpace("pulse", new Rocket(new Vector(800, 700), Vector.Zero, 1.2 * Math.PI), Г¤Г»Г°Г , ГЎГ Г«ГЎГҐГ± =>
             {
-                var угол = Math.PI * DateTime.Now.Millisecond / 500.0;
-                var направление = (балбес - дыра);
-                var модуль = (50 * направление.Length) / ((направление.Length + 1) * (направление.Length + 1));
-                var милисекунды = DateTime.Now.Millisecond - 100;
-                if (милисекунды < 450) милисекунды = 900 - милисекунды;
-                var коэффициент = модуль * (милисекунды - rand.Next(4)) / 100 / направление.Length;
-                var результат = new Vector(направление.X * коэффициент * Math.Cos(угол), направление.Y * коэффициент * Math.Sin(угол));
-                return результат;
-            }, x => 1 / x);
+                var ГіГЈГ®Г« = Math.PI * DateTime.Now.Millisecond / 500.0;
+                var Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ = (ГЎГ Г«ГЎГҐГ± - Г¤Г»Г°Г );
+                var Г¬Г®Г¤ГіГ«Гј = (50 * Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Length) / ((Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Length + 1) * (Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Length + 1));
+                var Г¬ГЁГ«ГЁГ±ГҐГЄГіГ­Г¤Г» = DateTime.Now.Millisecond - 100;
+                if (Г¬ГЁГ«ГЁГ±ГҐГЄГіГ­Г¤Г» < 450) Г¬ГЁГ«ГЁГ±ГҐГЄГіГ­Г¤Г» = 900 - Г¬ГЁГ«ГЁГ±ГҐГЄГіГ­Г¤Г»;
+                var ГЄГ®ГЅГґГґГЁГ¶ГЁГҐГ­ГІ = Г¬Г®Г¤ГіГ«Гј * (Г¬ГЁГ«ГЁГ±ГҐГЄГіГ­Г¤Г» - rand.Next(4)) / 100 / Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Length;
+                var Г°ГҐГ§ГіГ«ГјГІГ ГІ = new Vector(Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.X * ГЄГ®ГЅГґГґГЁГ¶ГЁГҐГ­ГІ * Math.Cos(ГіГЈГ®Г«), Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГҐ.Y * ГЄГ®ГЅГґГґГЁГ¶ГЁГҐГ­ГІ * Math.Sin(ГіГЈГ®Г«));
+                return Г°ГҐГ§ГіГ«ГјГІГ ГІ;
+            }, x => 1 /x);
 		}
 
-		public static Turn ControlRocket(Rocket балбес, Vector дыра)
+		public static Turn ControlRocket(Rocket ГЎГ Г«ГЎГҐГ±, Vector Г¤Г»Г°Г )
 		{
-            var векторОтБалбесаКДыре = дыра - балбес.Location;
-            var уголВектораБалбесДыра = Math.Asin(векторОтБалбесаКДыре.Y/векторОтБалбесаКДыре.Length);
-            if (векторОтБалбесаКДыре.X < 0 && векторОтБалбесаКДыре.Y > 0) уголВектораБалбесДыра += Math.PI;
-            else if (векторОтБалбесаКДыре.X < 0 && векторОтБалбесаКДыре.Y < 0) уголВектораБалбесДыра -= Math.PI;
-            if (уголВектораБалбесДыра < балбес.Direction % (2*Math.PI)) return Turn.Left;
+            var ГўГҐГЄГІГ®Г°ГЋГІГЃГ Г«ГЎГҐГ±Г ГЉГ„Г»Г°ГҐ = Г¤Г»Г°Г  - ГЎГ Г«ГЎГҐГ±.Location;
+            var ГіГЈГ®Г«Г‚ГҐГЄГІГ®Г°Г ГЃГ Г«ГЎГҐГ±Г„Г»Г°Г  = Math.Asin(ГўГҐГЄГІГ®Г°ГЋГІГЃГ Г«ГЎГҐГ±Г ГЉГ„Г»Г°ГҐ.Y/ГўГҐГЄГІГ®Г°ГЋГІГЃГ Г«ГЎГҐГ±Г ГЉГ„Г»Г°ГҐ.Length);
+            if (ГўГҐГЄГІГ®Г°ГЋГІГЃГ Г«ГЎГҐГ±Г ГЉГ„Г»Г°ГҐ.X < 0 && ГўГҐГЄГІГ®Г°ГЋГІГЃГ Г«ГЎГҐГ±Г ГЉГ„Г»Г°ГҐ.Y > 0) ГіГЈГ®Г«Г‚ГҐГЄГІГ®Г°Г ГЃГ Г«ГЎГҐГ±Г„Г»Г°Г  += Math.PI;
+            else if (ГўГҐГЄГІГ®Г°ГЋГІГЃГ Г«ГЎГҐГ±Г ГЉГ„Г»Г°ГҐ.X < 0 && ГўГҐГЄГІГ®Г°ГЋГІГЃГ Г«ГЎГҐГ±Г ГЉГ„Г»Г°ГҐ.Y < 0) ГіГЈГ®Г«Г‚ГҐГЄГІГ®Г°Г ГЃГ Г«ГЎГҐГ±Г„Г»Г°Г  -= Math.PI;
+            if (ГіГЈГ®Г«Г‚ГҐГЄГІГ®Г°Г ГЃГ Г«ГЎГҐГ±Г„Г»Г°Г  < ГЎГ Г«ГЎГҐГ±.Direction % (2*Math.PI)) return Turn.Left;
             else return Turn.Right;
 		}
 	}
